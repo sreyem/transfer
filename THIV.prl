@@ -1,0 +1,475 @@
+*-------------------------------------------------------------------------------
+* Section 1: Control section
+*-------------------------------------------------------------------------------
+
+FOCUSPEARL CallingProgram
+4.4.4 CallingProgramVersion
+6                 InitYears
+01-Jan-1901       TimStart
+31-Dec-1926       TimEnd
+0.0               AmaSysEnd (kg.ha-1)
+0.001             ThetaTol (m3.m-3)
+Month             OptDelTimPrn
+30                DelTimPrn  (d)
+No                RepeatHydrology
+OnLine            OptHyd
+1E-7              DelTimSwaMin (d)
+0.2               DelTimSwaMax (d)
+Yes               PrintCumulatives
+1.0               GWLTol (m)
+30                MaxItSwa
+No                OptHysteresis
+0.2               PreHeaWetDryMin (cm)
+Yes               OptScreen
+No                OptPersistency
+All               OptSys
+No                OptPaddy
+No                OptMacropore
+ 
+*-------------------------------------------------------------------------------
+* Section 2: Soil section
+*-------------------------------------------------------------------------------
+
+THIV-S_Soil SoilTypeID
+THIVA Location
+table SoilProfile
+ThiHor NumLay
+(m)
+0.3      12
+0.15     6
+0.15     6
+0.25     5
+0.15     3
+3.5      35
+end_table
+table  horizon SoilProperties
+Nr     FraSand    FraSilt    FraClay    CntOm         pH
+       (kg.kg-1)  (kg.kg-1)  (kg.kg-1)  (kg.kg-1)     (-)
+1      0.319      0.428      0.253      0.0128        7.7
+2      0.319      0.428      0.253      0.0128        7.7
+3      0.317      0.387      0.296      0.0098        7.7
+4      0.324      0.357      0.319      0.0053        7.8
+5      0.315      0.356      0.329      0.0031        7.8
+6      0.315      0.356      0.329      0.0031        7.8
+end_table
+table  horizon VanGenuchtenPar
+Nr     ThetaSat    ThetaRes    AlphaDry    AlphaWet    n       KSat      l
+       (m3.m-3)    (m3.m-3)    (cm-1)      (cm-1)     (-)     (m.d-1)   (-)
+1      0.434       0.01        0.0333     0.0666     1.1804  0.3007    -3.162
+2      0.434       0.01        0.0333     0.0666     1.1804  0.3007    -3.162
+3      0.441       0.01        0.0358     0.0716     1.133   0.197     -3.402
+4      0.428       0.01        0.0362     0.0724     1.1252  0.1581    -3.312
+5      0.404       0.01        0.0337     0.0674     1.1145  0.1089    -3.259
+6      0.404       0.01        0.0337     0.0674     1.1145  0.1089    -3.259
+end_table
+Input             OptRho
+table horizon     Rho             (kg.m-3)
+1    1420.0    
+2    1420.0    
+3    1430.0    
+4    1480.0    
+5    1560.0    
+6    1560.0    
+end_table
+ 
+0.002             ZPndMax         (m)
+ 
+* Soil evaporation parameters
+Boesten           OptSolEvp
+1                 FacEvpSol       (-)
+0.79              CofRedEvp       (cm1/2)
+0.01              PrcMinEvp       (m.d-1)
+ 
+Table horizon LenDisLiq (m)
+1  0.05
+2  0.05
+3  0.05
+4  0.05
+5  0.05
+6  0.05
+end_table
+MillingtonQuirk   OptCofDifRel
+2                 ExpDifLiqMilNom (-)
+0.6667            ExpDifLiqMilDen (-)
+2                 ExpDifGasMilNom (-)
+0.6667            ExpDifGasMilDen (-)
+Constant          OptPnd
+ 
+*-------------------------------------------------------------------------------
+* Section 3: Weather and irrigation section
+*-------------------------------------------------------------------------------
+
+THIV-M            MeteoStation
+Input             OptEvp
+6.4               TemLboSta       (C)
+No                OptIrr
+No                IrrigationScheme
+1.0               FacPrc (-)
+0.0               DifTem (C)
+1.0               FacEvp (-)
+No                OptRainfall
+Daily             OptMetInp
+Laminar           OptTraRes
+No                OptRainfallEvents
+No                OptSnow
+ 
+*-------------------------------------------------------------------------------
+* Section 4a: Lower boundary flux
+*-------------------------------------------------------------------------------
+
+-500              ZGrwLevSta (cm)
+
+FreeDrain         OptLbo
+*-------------------------------------------------------------------------------
+* Section 4b: Drainage/infiltration section
+*-------------------------------------------------------------------------------
+
+No                OptDra
+No                OptSurDra
+0                 NumDraLev
+
+*-------------------------------------------------------------------------------
+* Section 5: Compound section
+*-------------------------------------------------------------------------------
+
+TFS SubstanceName
+table compounds
+TFS
+CGA13
+NOA61
+CGA76
+end_table
+EqlDom_Input OptDT50_TFS
+EqlDom_Input OptDT50_CGA13
+EqlDom_Input OptDT50_NOA61
+EqlDom_Input OptDT50_CGA76
+408.4            MolMas_TFS (g.mol-1)
+394.4            MolMas_CGA13 (g.mol-1)
+424.3            MolMas_NOA61 (g.mol-1)
+318.3            MolMas_CGA76 (g.mol-1)
+table FraPrtDau (mol.mol-1)
+0.707 TFS -> CGA13
+0.164 CGA13 -> NOA61
+0.0542 CGA13 -> CGA76
+end_table
+OptimumConditions OptCntLiqTraRef_TFS
+0.52             DT50Ref_TFS (d)
+20.0             TemRefTra_TFS (C)
+0.7              ExpLiqTra_TFS (-)
+1.0              CntLiqTraRef_TFS (kg.kg-1)
+65.4             MolEntTra_TFS (kJ.mol-1)
+OptimumConditions OptCntLiqTraRef_CGA13
+48.1             DT50Ref_CGA13 (d)
+20.0             TemRefTra_CGA13 (C)
+0.7              ExpLiqTra_CGA13 (-)
+1.0              CntLiqTraRef_CGA13 (kg.kg-1)
+65.4             MolEntTra_CGA13 (kJ.mol-1)
+NonOptimumConditions OptCntLiqTraRef_NOA61
+36.1             DT50Ref_NOA61 (d)
+20.0             TemRefTra_NOA61 (C)
+0.7              ExpLiqTra_NOA61 (-)
+1.0              CntLiqTraRef_NOA61 (kg.kg-1)
+65.4             MolEntTra_NOA61 (kJ.mol-1)
+OptimumConditions OptCntLiqTraRef_CGA76
+51.5             DT50Ref_CGA76 (d)
+20.0             TemRefTra_CGA76 (C)
+0.7              ExpLiqTra_CGA76 (-)
+1.0              CntLiqTraRef_CGA76 (kg.kg-1)
+65.4             MolEntTra_CGA76 (kJ.mol-1)
+table horizon FacZTra (-)
+hor TFS CGA13 NOA61 CGA76
+1 1 1 1 1
+2 0.5 0.5 0.5 0.5
+3 0.5 0.5 0.5 0.5
+4 0.3 0.3 0.3 0.3
+5 0.3 0.3 0.3 0.3
+6 0 0 0 0
+end_table
+table horizon FacZSor (-)
+hor TFS CGA13 NOA61 CGA76
+1 -99 -99 -99 -99
+2 -99 -99 -99 -99
+3 -99 -99 -99 -99
+4 -99 -99 -99 -99
+5 -99 -99 -99 -99
+6 -99 -99 -99 -99
+end_table
+0.0              MolEntSor_TFS (kJ.mol-1)
+20.0             TemRefSor_TFS (C)
+pH-independent   OptCofFre_TFS
+1327.0           KomEql_TFS (L.kg-1)
+1327.0           KomEqlMax_TFS (L.kg-1)
+1.0              ConLiqRef_TFS (mg.L-1)
+0.96             ExpFre_TFS (-)
+0.0              MolEntSor_CGA13 (kJ.mol-1)
+20.0             TemRefSor_CGA13 (C)
+pH-independent   OptCofFre_CGA13
+67.4             KomEql_CGA13 (L.kg-1)
+67.4             KomEqlMax_CGA13 (L.kg-1)
+1.0              ConLiqRef_CGA13 (mg.L-1)
+1.0              ExpFre_CGA13 (-)
+0.0              MolEntSor_NOA61 (kJ.mol-1)
+20.0             TemRefSor_NOA61 (C)
+pH-independent   OptCofFre_NOA61
+1.9              KomEql_NOA61 (L.kg-1)
+1.9              KomEqlMax_NOA61 (L.kg-1)
+1.0              ConLiqRef_NOA61 (mg.L-1)
+0.905            ExpFre_NOA61 (-)
+0.0              MolEntSor_CGA76 (kJ.mol-1)
+20.0             TemRefSor_CGA76 (C)
+pH-independent   OptCofFre_CGA76
+4684.0           KomEql_CGA76 (L.kg-1)
+4684.0           KomEqlMax_CGA76 (L.kg-1)
+1.0              ConLiqRef_CGA76 (mg.L-1)
+0.877            ExpFre_CGA76 (-)
+0.0              PreVapRef_TFS (Pa)
+20.0             TemRefVap_TFS (C)
+0.61             SlbWatRef_TFS (mg.L-1)
+25.0             TemRefSlb_TFS (C)
+27.0             MolEntSlb_TFS (kJ.mol-1)
+95.0             MolEntVap_TFS (kJ.mol-1)
+0.0              PreVapRef_CGA13 (Pa)
+20.0             TemRefVap_CGA13 (C)
+21000.0          SlbWatRef_CGA13 (mg.L-1)
+25.0             TemRefSlb_CGA13 (C)
+27.0             MolEntSlb_CGA13 (kJ.mol-1)
+95.0             MolEntVap_CGA13 (kJ.mol-1)
+0.0              PreVapRef_NOA61 (Pa)
+20.0             TemRefVap_NOA61 (C)
+290000.0         SlbWatRef_NOA61 (mg.L-1)
+25.0             TemRefSlb_NOA61 (C)
+27.0             MolEntSlb_NOA61 (kJ.mol-1)
+95.0             MolEntVap_NOA61 (kJ.mol-1)
+0.0              PreVapRef_CGA76 (Pa)
+20.0             TemRefVap_CGA76 (C)
+0.6              SlbWatRef_CGA76 (mg.L-1)
+20.0             TemRefSlb_CGA76 (C)
+27.0             MolEntSlb_CGA76 (kJ.mol-1)
+95.0             MolEntVap_CGA76 (kJ.mol-1)
+0.0              CofDesRat_TFS (d-1)
+0.0              FacSorNeqEql_TFS (-)
+0.0              CofDesRat_CGA13 (d-1)
+0.0              FacSorNeqEql_CGA13 (-)
+0.0              CofDesRat_NOA61 (d-1)
+0.0              FacSorNeqEql_NOA61 (-)
+0.0              CofDesRat_CGA76 (d-1)
+0.0              FacSorNeqEql_CGA76 (-)
+0.0              FacUpt_TFS (-)
+0.0              FacUpt_CGA13 (-)
+0.0              FacUpt_NOA61 (-)
+0.0              FacUpt_CGA76 (-)
+0.01             ThiAirBouLay (m)
+Lumped           OptDspCrp_TFS
+1.0              DT50DspCrp_TFS (d)
+1000000.0        DT50PenCrp_TFS (d)
+1000000.0        DT50VolCrp_TFS (d)
+1000000.0        DT50TraCrp_TFS (d)
+1E-6             FacWasCrp_TFS (m-1)
+Lumped           OptDspCrp_CGA13
+1.0              DT50DspCrp_CGA13 (d)
+1000000.0        DT50PenCrp_CGA13 (d)
+1000000.0        DT50VolCrp_CGA13 (d)
+1000000.0        DT50TraCrp_CGA13 (d)
+1E-6             FacWasCrp_CGA13 (m-1)
+Lumped           OptDspCrp_NOA61
+1.0              DT50DspCrp_NOA61 (d)
+1000000.0        DT50PenCrp_NOA61 (d)
+1000000.0        DT50VolCrp_NOA61 (d)
+1000000.0        DT50TraCrp_NOA61 (d)
+1E-6             FacWasCrp_NOA61 (m-1)
+Lumped           OptDspCrp_CGA76
+1.0              DT50DspCrp_CGA76 (d)
+1000000.0        DT50PenCrp_CGA76 (d)
+1000000.0        DT50VolCrp_CGA76 (d)
+1000000.0        DT50TraCrp_CGA76 (d)
+1E-6             FacWasCrp_CGA76 (m-1)
+20.0             TemRefDif_TFS (C)
+4.3E-5           CofDifWatRef_TFS (m2.d-1)
+0.43             CofDifAirRef_TFS (m2.d-1)
+20.0             TemRefDif_CGA13 (C)
+4.3E-5           CofDifWatRef_CGA13 (m2.d-1)
+0.43             CofDifAirRef_CGA13 (m2.d-1)
+20.0             TemRefDif_NOA61 (C)
+4.3E-5           CofDifWatRef_NOA61 (m2.d-1)
+0.43             CofDifAirRef_NOA61 (m2.d-1)
+20.0             TemRefDif_CGA76 (C)
+4.3E-5           CofDifWatRef_CGA76 (m2.d-1)
+0.43             CofDifAirRef_CGA76 (m2.d-1)
+*-------------------------------------------------------------------------------
+* Section 6: Management section
+*-------------------------------------------------------------------------------
+
+Crop01_WCEREALS_Thiva ApplicationScheme
+1.0               ZTgt (m)
+1                 DelTimEvt (a)
+table Applications
+18-Jan-1901   AppCrpUsr    0.10032   0.8
+end_table
+table TillageDates
+end_table
+table interpolate CntSysEql (mg.kg-1)
+0.0      0.0      
+50.0     0.0      
+end_table
+table interpolate CntSysNeq (mg.kg-1)
+0.0      0.0      
+50.0     0.0      
+end_table
+No DepositionScheme
+table    FlmDep   (kg.ha-1.d-1)
+end_table
+0.2               ZTil (m)
+*-------------------------------------------------------------------------------
+* Section 7: Crop section
+*-------------------------------------------------------------------------------
+
+THIV-WCEREALS CropCalendar
+Yes               RepeatCrops
+Fixed             OptLenCrp
+table  Crops
+30-Nov           30-Jun        WCEREALS1
+end_table
+table  CrpPar_WCEREALS1
+0.0    0.0    1.05   0.0    0.0    
+0.564  7.5    1.05   0.8    0.0    
+0.569  7.5    1.1    0.8    0.0    
+0.858  7.5    1.1    0.8    0.0    
+0.863  7.5    0.7    0.8    0.0    
+1.0    7.5    0.7    0.8    0.0    
+end_table
+table  RootDensity_WCEREALS1
+0.0    1.0    
+1.0    1.0    
+end_table
+0.0               HLim1_WCEREALS1 (cm)
+-1.0              HLim2_WCEREALS1 (cm)
+-500.0            HLim3U_WCEREALS1 (cm)
+-900.0            HLim3L_WCEREALS1 (cm)
+-16000.0          HLim4_WCEREALS1 (cm)
+70.0              RstEvpCrp_WCEREALS1 (s.m-1)
+0.39              CofExtDif_WCEREALS1 (-)
+1.0               CofExtDir_WCEREALS1 (-)
+0.0001            CofIntCrp_WCEREALS1 (cm)
+0.0               TemSumSta_WCEREALS1 (C)
+0.0               TemSumEmgAnt_WCEREALS1 (C)
+0.0               TemSumAntMat_WCEREALS1 (C)
+0.2               ZTensiometer_WCEREALS1 (m)
+-100.0            PreHeaIrrSta_WCEREALS1 (cm)
+15.0              IrgThreshold_WCEREALS1 (mm)
+*-------------------------------------------------------------------------------
+* Section 8: Output control
+*-------------------------------------------------------------------------------
+
+table VerticalProfiles
+end_table
+Yes               OptDelOutFiles
+Yes               LeachingReport
+DaysFromSta       DateFormat
+G12.4             RealFormat
+table OutputDepths (m)
+0.05      
+0.1       
+0.2       
+0.3       
+0.4       
+0.5       
+0.75      
+1.0       
+2.0       
+end_table
+No                print_AmaAppCrp
+Yes               print_AmaAppSol
+No                print_AmaCrp
+No                print_AmaDra_1
+No                print_AmaDra_2
+No                print_AmaDra_3
+No                print_AmaDra_4
+No                print_AmaDra_5
+Yes               print_AmaEqlTgt
+Yes               print_AmaEqlPro
+No                print_AmaEqlTil
+Yes               print_AmaErrMic
+Yes               print_AmaForPro
+No                print_AmaHarCrp
+Yes               print_AmaNeqTgt
+Yes               print_AmaNeqPro
+No                print_AmaNeqTil
+Yes               print_AmaSysTgt
+Yes               print_AmaSysPro
+No                print_AmaSysTil
+Yes               print_AmaTraPro
+Yes               print_AmaUptPro
+No                print_AmaDspCrp
+No                print_AmaWasCrp
+No                print_ConGas
+Yes               print_ConLiq
+Yes               print_ConLiqLbo
+Yes               print_ConLiqSatAvg
+Yes               print_ConSys
+No                print_ConSysEql
+No                print_ConSysNeq
+No                print_DelTimPrl
+Yes               print_Eps
+Yes               print_FacCrpEvp
+No                print_FlmDepCrp
+No                print_FlmGas
+Yes               print_FlmGasVol
+No                print_FlmLiq
+Yes               print_FlmLiqInfSys
+Yes               print_FlmLiqLbo
+No                print_FlmSys
+No                print_FlvLiq
+No                print_FlvLiqDra_3
+No                print_FlvLiqDra_4
+No                print_FlvLiqDra_5
+Yes               print_FlvLiqEvpIntIrr
+Yes               print_FlvLiqEvpIntPrc
+Yes               print_FlvLiqEvpSol
+Yes               print_FlvLiqEvpSolPot
+Yes               print_FlvLiqIrr
+Yes               print_FlvLiqLbo
+No                print_FlvLiqGrw
+Yes               print_FlvLiqTrp
+Yes               print_FlvLiqTrpPot
+No                print_FraCovCrp
+Yes               print_GrwLev
+No                print_LAI
+No                print_PreHea
+Yes               print_Theta
+No                print_StoCap
+No                print_FlvLiqGrwSur
+No                print_VvrLiqDra
+No                print_VvrLiqUpt
+No                print_ZRoot
+No                print_FlvLiqDra_1
+No                print_FlvLiqDra_2
+Yes               print_FlvLiqPrc
+Yes               print_Tem
+No                print_ConLiqDra_1
+No                print_ConLiqDra_2
+No                print_ConLiqDra_3
+No                print_ConLiqDra_4
+No                print_ConLiqDra_5
+No                print_ConLiqDra
+No                print_ZPnd
+No                print_AvoLiqSol
+No                print_ConGas_VPrf
+No                print_ConLiq_VPrf
+No                print_ConSys_VPrf
+No                print_ConSysEql_VPrf
+No                print_ConSysNeq_VPrf
+No                print_PreHea_VPrf
+No                print_Tem_VPrf
+No                print_Theta_VPrf
+No                print_AvoLiqErr
+No                print_FlvLiqInf
+No                print_RstAirLam
+None              OptAux
+No                SoilReport
+80.0              TargetPercentile (%)
+No                AirReport
+No                DrainageReport
+ 
+*-------------------------------------------------------------------------------
+* End of FOCUSPEARL 4.4.4 input file
+*-------------------------------------------------------------------------------
